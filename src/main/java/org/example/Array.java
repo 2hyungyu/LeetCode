@@ -1,6 +1,6 @@
 package org.example;
 
-import java.util.Arrays;
+import java.util.*;
 
 public class Array {
     public int removeDuplicates(int[] nums) {
@@ -21,18 +21,109 @@ public class Array {
         if (nums.length == 0) {
             throw new IllegalArgumentException();
         }
+        int length = nums.length;
+        k = k % nums.length;
+        reverse(nums, 0, length - 1);
+        reverse(nums, 0, k - 1);
+        reverse(nums, k, length - 1);
+    }
 
-        int[] numsCopy = nums.clone();
-        int rotate = Math.abs(k - nums.length);
-        int endIndex = 0;
-        for (int index = 0 ; index < nums.length ; index++) {
-            if (rotate < nums.length) {
-                nums[index] = numsCopy[rotate];
-                rotate++;
-            } else {
-                nums[index] = numsCopy[endIndex];
-                endIndex++;
+    private void reverse (int[] nums, int sPos, int ePos) {
+        while (sPos < ePos) {
+            int temp = nums[sPos];
+            nums[sPos] = nums[ePos];
+            nums[ePos] = temp;
+            sPos++;
+            ePos--;
+        }
+    }
+
+    public boolean containsDuplicate(int[] nums) {
+        int length = nums.length;
+        if (length == 0 ) {
+            throw new IllegalArgumentException();
+        }
+        Set<Integer> detectDup = new HashSet<>();
+        for (int num : nums) {
+            if (!detectDup.add(num)) {
+                return true;
             }
         }
+        return false;
+    }
+
+    public int singleNumber(int[] nums) {
+        int length = nums.length;
+        if (length % 2 == 0) {
+            throw new IllegalArgumentException();
+        }
+        int singleNum = nums[0];
+        for (int i = 1 ; i < length ; i++) {
+            singleNum = singleNum ^ nums[i];
+        }
+        return singleNum;
+    }
+
+    public int[] intersect(int[] nums1, int[] nums2) {
+        Arrays.sort(nums1);
+        Arrays.sort(nums2);
+        int nums1Index = 0;
+        int nums2Index = 0;
+        List<Integer> intersectList = new ArrayList<>();
+        while (nums1Index < nums1.length && nums2Index < nums2.length) {
+            int num1 = nums1[nums1Index];
+            int num2 = nums2[nums2Index];
+            if (num1 < num2) {
+                nums1Index++;
+            } else if (num1 > num2) {
+                nums2Index++;
+            } else {
+                nums1Index++;
+                nums2Index++;
+                intersectList.add(num1);
+            }
+        }
+        int[] intersectArray = new int[intersectList.size()];
+        for (int i = 0 ; i < intersectList.size() ; i++) {
+            intersectArray[i] = intersectList.get(i);
+        }
+        return intersectArray;
+    }
+
+    public int[] plusOne(int[] digits) {
+        for (int i = digits.length - 1 ; i >= 0 ; i --) {
+            if (digits[i] + 1 != 10) {
+                digits[i] = digits[i] + 1;
+                return digits;
+            }
+            digits[i] = 0;
+        }
+        int[] plusOne = new int[digits.length + 1];
+        plusOne[0] = 1;
+        return plusOne;
+    }
+
+    public void moveZeroes(int[] nums) {
+        int left = 0;
+        for (int right = 0 ; right < nums.length ; right++) {
+            if (nums[right] != 0) {
+                int temp = nums[right];
+                nums[right] = nums[left];
+                nums[left] = temp;
+                left++;
+            }
+        }
+    }
+
+    public int[] twoSum(int[] nums, int target) {
+        HashMap<Integer, Integer> numMap= new HashMap<>();
+        for (int i = 0 ; i < nums.length ; i++) {
+            int remain = target - nums[i];
+            if (numMap.containsKey(remain)) {
+                return new int[]{numMap.get(remain), i};
+            }
+            numMap.put(nums[i], i);
+        }
+        throw new IllegalArgumentException();
     }
 }
