@@ -1,11 +1,8 @@
-package org.example;
+package org.LeetCode;
 
 // Press Shift twice to open the Search Everywhere dialog and type `show whitespaces`,
 // then press Enter. You can now see whitespace characters in your code.
 public class Main {
     public static void main(StringLeetCode[] args) {
-        Array array = new Array();
-        int[] rotateArray = new int[]{1,2,3};
-        array.rotate(rotateArray, 4);
     }
 }

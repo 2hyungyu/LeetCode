@@ -1,6 +1,5 @@
-package org.example;
+package org.LeetCode;
 
-import java.io.CharArrayReader;
 import java.util.*;
 
 public class StringLeetCode {
@@ -153,5 +152,16 @@ public class StringLeetCode {
             result.append(firstStr.charAt(curIndex));
         }
         return result.toString();
+    }
+    public int countSubstrings(String s) {
+        int count = 0;
+        for (int start = 0 ; start < s.length(); start++) {
+            for (int end = start + 1; end <= s.length() ; end++) {
+                if (isPalindrome(s.substring(start, end))) {
+                    count++;
+                }
+            }
+        }
+        return count;
     }
 }

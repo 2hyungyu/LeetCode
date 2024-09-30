@@ -1,12 +1,12 @@
-package org.example;
+package org.LeetCode;
 
 import java.util.*;
 
-public class Array {
+public class ArrayLeetCode {
     public int removeDuplicates(int[] nums) {
         int curIndex = 1;
         int curInt = nums[0];
-        for (int index = 1 ; index < nums.length ; index++) {
+        for (int index = 1; index < nums.length; index++) {
             int newInt = nums[index];
             if (curInt != newInt) {
                 nums[curIndex] = newInt;
@@ -28,7 +28,7 @@ public class Array {
         reverse(nums, k, length - 1);
     }
 
-    private void reverse (int[] nums, int sPos, int ePos) {
+    private void reverse(int[] nums, int sPos, int ePos) {
         while (sPos < ePos) {
             int temp = nums[sPos];
             nums[sPos] = nums[ePos];
@@ -40,7 +40,7 @@ public class Array {
 
     public boolean containsDuplicate(int[] nums) {
         int length = nums.length;
-        if (length == 0 ) {
+        if (length == 0) {
             throw new IllegalArgumentException();
         }
         Set<Integer> detectDup = new HashSet<>();
@@ -58,7 +58,7 @@ public class Array {
             throw new IllegalArgumentException();
         }
         int singleNum = nums[0];
-        for (int i = 1 ; i < length ; i++) {
+        for (int i = 1; i < length; i++) {
             singleNum = singleNum ^ nums[i];
         }
         return singleNum;
@@ -84,14 +84,14 @@ public class Array {
             }
         }
         int[] intersectArray = new int[intersectList.size()];
-        for (int i = 0 ; i < intersectList.size() ; i++) {
+        for (int i = 0; i < intersectList.size(); i++) {
             intersectArray[i] = intersectList.get(i);
         }
         return intersectArray;
     }
 
     public int[] plusOne(int[] digits) {
-        for (int i = digits.length - 1 ; i >= 0 ; i --) {
+        for (int i = digits.length - 1; i >= 0; i--) {
             if (digits[i] + 1 != 10) {
                 digits[i] = digits[i] + 1;
                 return digits;
@@ -105,7 +105,7 @@ public class Array {
 
     public void moveZeroes(int[] nums) {
         int left = 0;
-        for (int right = 0 ; right < nums.length ; right++) {
+        for (int right = 0; right < nums.length; right++) {
             if (nums[right] != 0) {
                 int temp = nums[right];
                 nums[right] = nums[left];
@@ -125,5 +125,34 @@ public class Array {
             numMap.put(nums[i], i);
         }
         throw new IllegalArgumentException();
+    }
+
+    public int maxSubArrayLen(int[] nums, int k) {
+        Map<Integer, Integer> sumMap = new HashMap<>();
+        sumMap.put(0, -1);
+        int maxLength = 0;
+        int sum = 0;
+        for (int i = 0 ; i < nums.length ; i++) {
+            sum += nums[i];
+            if (sumMap.containsKey(sum - k)) {
+                maxLength = Math.max(maxLength, i - sumMap.get(sum - k));
+            }
+            sumMap.put(sum, i);
+        }
+
+        return maxLength;
+    }
+
+    public int maxSubArray(int[] nums) {
+        int sum = 0;
+        int max = Integer.MIN_VALUE;
+        for (int num : nums) {
+            sum += num;
+            max = Math.max(max, sum);
+            if (sum < 0) {
+                sum = 0;
+            }
+        }
+        return max;
     }
 }
